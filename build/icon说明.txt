@@ -1,0 +1,6 @@
+把 QuickType 的 logo 放在本目录下，任选其一即可：
+
+- icon.ico  （Windows 推荐，任务栏/标题栏/托盘）
+- icon.png  （也可用，建议 256×256 或 64×64）
+
+放好后重新运行 QuickType，窗口和托盘会显示你的图标。
