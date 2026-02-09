@@ -63,6 +63,34 @@ if sys.platform == "win32":
     def unregister_native_hotkey(hwnd):
         user32.UnregisterHotKey(hwnd, HOTKEY_ID)
 
+    GA_ROOT = 2
+
+    def is_xshell_window(hwnd):
+        """判断窗口是否属于 Xshell（Xshell 使用 Ctrl+Shift+V 粘贴）。"""
+        if not hwnd or not user32.IsWindow(hwnd):
+            return False
+        root = user32.GetAncestor(hwnd, GA_ROOT) or hwnd
+        buf = ctypes.create_unicode_buffer(260)
+        if user32.GetWindowTextW(root, buf, 260) and "xshell" in buf.value.lower():
+            return True
+        pid = ctypes.c_ulong()
+        user32.GetWindowThreadProcessId(root, ctypes.byref(pid))
+        if not pid.value:
+            return False
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if not handle:
+            return False
+        try:
+            size = ctypes.c_ulong(ctypes.sizeof(ctypes.c_wchar) * 260)
+            path_buf = ctypes.create_unicode_buffer(260)
+            if kernel32.QueryFullProcessImageNameW(handle, 0, path_buf, ctypes.byref(size)):
+                path = path_buf.value.lower()
+                return "xshell.exe" in path or "xshellex.exe" in path
+        finally:
+            kernel32.CloseHandle(handle)
+        return False
+
     class _MSG(ctypes.Structure):
         _fields_ = [
             ("hwnd", ctypes.c_void_p),
@@ -79,6 +107,9 @@ else:
 
     def set_foreground_hwnd(hwnd):
         pass
+
+    def is_xshell_window(hwnd):
+        return False
 
     def _set_window_topmost(widget, on_top=True):
         pass
@@ -142,6 +173,7 @@ def _app_icon():
     return None
 PASTE_DELAY_MS = 80
 PASTE_DELAY_AFTER_FOCUS_MS = 180
+PASTE_DELAY_AFTER_FOCUS_XSHELL_MS = 350  # Xshell 等终端需要更长时间才能接收按键
 # 发送 Ctrl+V 后等目标应用读完剪贴板再恢复，否则会贴成旧内容
 PASTE_DELAY_BEFORE_RESTORE_CLIP_MS = 250
 # 首次弹出后多次尝试把焦点放到搜索框
@@ -555,32 +587,39 @@ class MainWindow(QWidget):
                 self._paste_to_focus(content)
 
     def _paste_to_focus(self, text: str):
-        """隐藏窗口后先恢复“按快捷键前的窗口”焦点，再发送 Ctrl+V，并恢复原剪贴板。"""
+        """隐藏窗口后先恢复“按快捷键前的窗口”焦点，再发送 Ctrl+V 或逐字键入，并恢复原剪贴板。"""
         try:
             old_clip = pyperclip.paste()
         except Exception:
             old_clip = ""
-        pyperclip.copy(text)
         restore_hwnd = getattr(self, "_prev_foreground_hwnd", None)
+        use_typewriter = sys.platform == "win32" and restore_hwnd and is_xshell_window(restore_hwnd)
+        if not use_typewriter:
+            pyperclip.copy(text)
         self.hide()
+        paste_text = text if use_typewriter else None
         QTimer.singleShot(
             PASTE_DELAY_MS,
-            lambda: self._do_send_paste(old_clip, restore_hwnd),
+            lambda: self._do_send_paste(old_clip, restore_hwnd, paste_text),
         )
 
-    def _do_send_paste(self, restore_clip: str, restore_hwnd=None):
+    def _do_send_paste(self, restore_clip: str, restore_hwnd=None, paste_text=None):
         if sys.platform == "win32" and restore_hwnd is not None:
             set_foreground_hwnd(restore_hwnd)
+            delay = PASTE_DELAY_AFTER_FOCUS_XSHELL_MS if paste_text else PASTE_DELAY_AFTER_FOCUS_MS
             QTimer.singleShot(
-                PASTE_DELAY_AFTER_FOCUS_MS,
-                lambda: self._send_ctrl_v_and_restore_clip(restore_clip),
+                delay,
+                lambda: self._send_ctrl_v_and_restore_clip(restore_clip, restore_hwnd, paste_text),
             )
         else:
-            self._send_ctrl_v_and_restore_clip(restore_clip)
+            self._send_ctrl_v_and_restore_clip(restore_clip, None, paste_text)
 
-    def _send_ctrl_v_and_restore_clip(self, restore_clip: str):
+    def _send_ctrl_v_and_restore_clip(self, restore_clip: str, restore_hwnd=None, paste_text=None):
         try:
-            keyboard.press_and_release("ctrl+v")
+            if paste_text:
+                keyboard.write(paste_text, delay=0.02)
+            else:
+                keyboard.press_and_release("ctrl+v")
         except Exception:
             pass
         # 等目标应用读完剪贴板再恢复，否则会贴成旧内容
