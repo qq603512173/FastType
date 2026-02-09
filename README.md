@@ -2,6 +2,12 @@
 
 快速输入常用文本的小工具：用快捷键调出，在搜索框输入关键字筛选，选择一条结果后回车，文本会粘贴到当前焦点（如登录框、Shell 等），无需再从记事本复制粘贴。
 
+## 🌐 下载页面
+
+**访问下载页面：** [https://YOUR_USERNAME.github.io/FastType/](https://YOUR_USERNAME.github.io/FastType/)
+
+> 提示：请将 `YOUR_USERNAME` 替换为你的 GitHub 用户名，并启用 GitHub Pages。
+
 ## 技术方案：Python + PyQt5
 
 - **PyQt5**：桌面界面（顶部搜索框 + 下方结果列表，类似 Everything）。
@@ -66,6 +72,33 @@ pyinstaller FastType.spec
   - `build/icon.png`：若没有 icon.ico，打包时会自动转换为 icon.ico（需要安装 Pillow：`pip install Pillow`）
   - 运行时的窗口/托盘图标会使用 icon.ico 或 icon.png（优先 .ico）
 - 也可用命令行直接打包：`pyinstaller --onefile --windowed --name FastType main.py`（不包含 build 图标则需加 `--add-data "build;build"` 才能用图标）。
+
+## 发布与下载
+
+### 方式一：GitHub Releases + GitHub Pages（推荐）
+
+1. **上传 exe 到 GitHub Releases：**
+   - 本地打包：`pyinstaller FastType.spec`
+   - 在 GitHub 仓库页面点击 "Releases" → "Create a new release"
+   - 填写版本号（如 `v1.0.0`）和发布说明
+   - 上传 `dist/FastType.exe` 文件
+   - 点击 "Publish release"
+
+2. **启用 GitHub Pages：**
+   - 在仓库 Settings → Pages
+   - Source 选择 "Deploy from a branch"
+   - Branch 选择 `main`，文件夹选择 `/ (root)`
+   - 保存后访问：`https://YOUR_USERNAME.github.io/FastType/`
+
+3. **更新下载链接：**
+   - 编辑 `index.html`，将 `YOUR_USERNAME` 替换为你的 GitHub 用户名
+   - 提交并推送到仓库
+
+### 方式二：其他托管方式
+
+- **GitHub Pages**：免费，适合静态页面
+- **Gitee Pages**：国内访问更快
+- **其他选择**：Vercel、Netlify 等
 
 ## 使用说明
 

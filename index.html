@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastType - 快速输入常用文本的小工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #667eea;
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.3em;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .download-info {
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .version-info {
+            display: inline-block;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .usage-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .usage-steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        .usage-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1.1em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ FastType</h1>
+            <p>快速输入常用文本的小工具</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>产品介绍</h2>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #555;">
+                    FastType 是一款轻量级的文本快速输入工具。通过全局快捷键 <code style="background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">Alt+Q</code> 调出搜索窗口，输入关键字快速筛选常用文本片段，选择后回车即可将内容粘贴到当前焦点位置。无需再从记事本复制粘贴，让您的输入效率倍增！
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>核心功能</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>🎯 全局快捷键</h3>
+                        <p>使用 <code>Alt+Q</code> 在任何窗口快速调出搜索界面，无需切换窗口</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔍 智能搜索</h3>
+                        <p>支持按标题或内容关键字快速过滤，实时显示匹配结果</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>⚡ 快速粘贴</h3>
+                        <p>选择结果后回车，内容自动粘贴到调出前的焦点位置</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📝 片段管理</h3>
+                        <p>内置编辑界面，轻松新增、编辑、删除常用文本片段</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔒 本地存储</h3>
+                        <p>所有数据保存在本地，保护您的隐私安全</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💻 系统托盘</h3>
+                        <p>支持系统托盘运行，右键菜单快速操作</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>使用说明</h2>
+                <ol class="usage-steps">
+                    <li>运行 FastType 后，在任意窗口（浏览器、终端、登录框等）按 <code style="background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">Alt+Q</code> 调出搜索窗口</li>
+                    <li>在搜索框输入关键字，使用方向键 ↑↓ 或鼠标选择一条结果</li>
+                    <li>回车或双击该条，内容会粘贴到调出 FastType 之前获得焦点的输入位置</li>
+                    <li>需要新增/修改片段时，点击「编辑片段数据」打开维护界面，新增、编辑或删除后关闭即可</li>
+                </ol>
+            </div>
+
+            <div class="download-section">
+                <h2 style="margin-bottom: 30px; color: #333;">立即下载</h2>
+                <a href="https://github.com/qq603512173/FastType/releases/latest" class="download-btn" id="downloadBtn">
+                    📥 下载 FastType
+                </a>
+                <div class="download-info">
+                    <p>Windows 版本 | 无需安装 Python | 双击即可运行</p>
+                    <div class="version-info" id="versionInfo">最新版本</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                <a href="https://github.com/qq603512173/FastType">GitHub 仓库</a> | 
+                <a href="https://github.com/qq603512173/FastType/issues">问题反馈</a>
+            </p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                © 2025 FastType. 开源免费，欢迎使用。
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 尝试从 GitHub API 获取最新版本信息
+        async function fetchLatestVersion() {
+            try {
+                const repo = 'qq603512173/FastType'; // 请替换为你的 GitHub 用户名和仓库名
+                const response = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+                if (response.ok) {
+                    const data = await response.json();
+                    const version = data.tag_name || data.name;
+                    const downloadUrl = data.assets && data.assets.length > 0 ? data.assets[0].browser_download_url : data.html_url;
+                    
+                    document.getElementById('downloadBtn').href = downloadUrl;
+                    document.getElementById('versionInfo').textContent = version;
+                }
+            } catch (error) {
+                console.log('无法获取版本信息，使用默认下载链接');
+            }
+        }
+
+        // 页面加载时获取版本信息
+        fetchLatestVersion();
+    </script>
+</body>
+</html>
