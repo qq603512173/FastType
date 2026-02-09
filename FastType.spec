@@ -48,71 +48,12 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[
-        # 排除不需要的 PyQt5 模块
-        'PyQt5.QtWebEngine',
-        'PyQt5.QtWebEngineWidgets',
-        'PyQt5.QtWebSockets',
-        'PyQt5.QtQuick',
-        'PyQt5.QtQml',
-        'PyQt5.QtMultimedia',
-        'PyQt5.QtMultimediaWidgets',
-        'PyQt5.QtBluetooth',
-        'PyQt5.QtNfc',
-        'PyQt5.QtPositioning',
-        'PyQt5.QtLocation',
-        'PyQt5.QtSensors',
-        'PyQt5.QtSerialPort',
-        'PyQt5.QtSql',
-        'PyQt5.QtTest',
-        'PyQt5.QtXml',
-        'PyQt5.QtXmlPatterns',
-        'PyQt5.QtDesigner',
-        'PyQt5.QtHelp',
-        'PyQt5.QtOpenGL',
-        'PyQt5.QtPrintSupport',
-        # 排除不需要的 Python 模块
-        'matplotlib',
-        'numpy',
-        'pandas',
-        'scipy',
-        'PIL',
-        'Pillow',  # 已有 icon.ico，不需要运行时转换
-        # 排除更多不需要的模块
-        'tkinter',
-        'unittest',
-        'email',
-        'http',
-        'urllib',
-        'xml',
-        'xmlrpc',
-        'pydoc',
-        'doctest',
-        'pdb',
-        'bdb',
-        'pydoc_data',
-        'distutils',
-        'setuptools',
-        'pkg_resources',
-    ],
+    excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
     noarchive=False,
 )
-
-# 过滤掉不需要的文件以减小体积
-# 排除 Qt 翻译文件（如果不需要多语言支持，可节省几 MB）
-a.datas = [x for x in a.datas if not any(exclude in str(x[0]).lower() for exclude in [
-    'translations',  # Qt 翻译文件
-])]
-
-# 排除不需要的 Qt 平台插件
-a.binaries = [x for x in a.binaries if not any(exclude in x[0].lower() for exclude in [
-    'qwebgl',      # WebGL 平台插件
-    'qoffscreen',  # 离屏渲染插件
-    'qminimal',    # 最小化平台插件（通常不需要）
-])]
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
@@ -127,12 +68,7 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    upx_exclude=[
-        # 排除一些 UPX 压缩可能出问题的文件
-        'vcruntime140.dll',
-        'vcruntime140_1.dll',
-        'msvcp140.dll',
-    ],
+    upx_exclude=[],
     runtime_tmpdir=None,
     console=False,  # 无黑窗口
     disable_windowed_traceback=False,
