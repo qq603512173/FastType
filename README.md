@@ -86,9 +86,9 @@ pyinstaller FastType.spec
 2. **创建 Release：**
    - 访问：`https://github.com/qq603512173/FastType/releases`
    - 点击 "Create a new release"
-   - **Tag version**：输入 `v1.0.0`（如果提示需要 tag，直接输入新标签名）
-   - **Release title**：`FastType v1.0.0`
-   - **Description**：填写版本说明
+   - **Tag version**：输入 `v1.0.1`（如果提示需要 tag，直接输入新标签名）
+   - **Release title**：`FastType v1.0.1`
+   - **Description**：填写版本说明（见下方 v1.0.1 更新日志）
    - 在 "Attach binaries" 区域上传 `dist/FastType.exe`
    - 点击 "Publish release"
 
@@ -107,6 +107,14 @@ pyinstaller FastType.spec
 2. 在搜索框输入关键字，用 ↑↓ 或鼠标选择一条结果。
 3. 回车或双击该条，内容会粘贴到**调出 FastType 之前**获得焦点的输入位置。
 4. 需要新增/修改片段时，点击「编辑片段数据」打开维护界面，新增、编辑或删除后关闭，再次调出 FastType 会看到更新。
+
+## 更新日志
+
+### v1.0.1
+- **Xshell 兼容**：自动识别 Xshell 窗口，使用逐字键入方式输入内容，解决片段无法录入到 Xshell 的问题
+
+### v1.0.0
+- 初始版本：全局快捷键、搜索、粘贴、片段管理、托盘
 
 ## 注意事项
 
