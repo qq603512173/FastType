@@ -154,6 +154,38 @@
             font-size: 0.95em;
         }
 
+        .shortcuts-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            border-radius: 12px;
+            margin: 24px 0;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .shortcut-key {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1em;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        .shortcut-desc {
+            color: #555;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
         .version-info {
             display: inline-block;
             background: white;
@@ -240,8 +272,22 @@
             <div class="section">
                 <h2>产品介绍</h2>
                 <p style="font-size: 1.1em; line-height: 1.8; color: #555;">
-                    FastType 是一款轻量级的文本快速输入工具。通过全局快捷键 <code style="background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">Alt+Q</code> 调出搜索窗口，输入关键字快速筛选常用文本片段，选择后回车即可将内容粘贴到当前焦点位置。无需再从记事本复制粘贴，让您的输入效率倍增！
+                    FastType 是一款轻量级的文本快速输入工具。输入关键字快速筛选常用文本片段，选择后回车即可将内容粘贴到当前焦点位置。无需再从记事本复制粘贴，让您的输入效率倍增！
                 </p>
+                <div class="shortcuts-bar">
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">Alt+Q</span>
+                        <span class="shortcut-desc">打开 FastType </span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">Esc</span>
+                        <span class="shortcut-desc">关闭 FastType </span>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 24px;">
+                    <img src="build/FastType演示2.gif" alt="按 Alt+Q 打开 FastType 演示" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                    <p style="margin-top: 12px; color: #666; font-size: 0.95em;">Alt+Q 打开 · Esc 关闭 / Alt+Q open · Esc close</p>
+                </div>
             </div>
 
             <div class="section">

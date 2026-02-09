@@ -8,6 +8,9 @@
 
 > 提示：启用 GitHub Pages 后即可访问下载页面。
 
+![按 Alt+Q 打开 FastType](build/FastType演示2.gif)
+*按 Alt+Q 打开 FastType / Press Alt+Q to open FastType*
+
 ## 技术方案：Python + PyQt5
 
 - **PyQt5**：桌面界面（顶部搜索框 + 下方结果列表，类似 Everything）。
@@ -52,54 +55,6 @@ python main.py
 ```
 
 启动后窗口会隐藏，托盘区会出现 FastType 图标；按 `Alt+Q` 调出搜索窗口。若全局快捷键无效，可尝试**以管理员身份运行**。
-
-## 打包成可执行文件（第一版发布）
-
-使用 PyInstaller 打包为单文件 exe，用户无需安装 Python 即可运行。
-
-```bash
-# 安装打包依赖
-pip install pyinstaller
-
-# 使用项目内的 spec 打包（推荐，会带上 build 目录的图标）
-pyinstaller FastType.spec
-```
-
-生成的 exe 在 **`dist/FastType.exe`**，可直接发给用户或上传供下载。
-
-- 图标文件放在 `build/` 目录下：
-  - `build/icon.ico`：优先使用，直接作为 exe 图标
-  - `build/icon.png`：若没有 icon.ico，打包时会自动转换为 icon.ico（需要安装 Pillow：`pip install Pillow`）
-  - 运行时的窗口/托盘图标会使用 icon.ico 或 icon.png（优先 .ico）
-- 也可用命令行直接打包：`pyinstaller --onefile --windowed --name FastType main.py`（不包含 build 图标则需加 `--add-data "build;build"` 才能用图标）。
-
-## 发布与下载
-
-### 上传 exe 到 GitHub Releases
-
-1. **本地打包：**
-   ```bash
-   pyinstaller FastType.spec
-   ```
-   生成 `dist/FastType.exe`
-
-2. **创建 Release：**
-   - 访问：`https://github.com/qq603512173/FastType/releases`
-   - 点击 "Create a new release"
-   - **Tag version**：输入 `v1.0.1`（如果提示需要 tag，直接输入新标签名）
-   - **Release title**：`FastType v1.0.1`
-   - **Description**：填写版本说明（见下方 v1.0.1 更新日志）
-   - 在 "Attach binaries" 区域上传 `dist/FastType.exe`
-   - 点击 "Publish release"
-
-### 启用 GitHub Pages
-
-1. 在仓库 Settings → Pages
-2. Source 选择 "GitHub Actions"（推荐）或 "Deploy from a branch"
-3. 如果选择分支部署：Branch 选择 `main`，Folder 选择 `/ (root)`
-4. 保存后访问：`https://qq603512173.github.io/FastType/`
-
-> **说明：** exe 文件上传到 GitHub Releases，不会出现在代码仓库中。`index.html` 会自动从 Releases 获取最新版本下载链接。
 
 ## 使用说明
 
