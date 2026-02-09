@@ -75,33 +75,31 @@ pyinstaller FastType.spec
 
 ## 发布与下载
 
-### 方式一：GitHub Releases + GitHub Pages（推荐）
+### 上传 exe 到 GitHub Releases
 
-**说明：** exe 文件上传到 GitHub Releases（版本发布），不是直接上传到代码仓库。Releases 是 GitHub 的版本管理功能，文件作为附件存储，不会出现在代码文件列表中。
+1. **本地打包：**
+   ```bash
+   pyinstaller FastType.spec
+   ```
+   生成 `dist/FastType.exe`
 
-1. **上传 exe 到 GitHub Releases：**
-   - 本地打包：`pyinstaller FastType.spec`（生成 `dist/FastType.exe`）
-   - 在 GitHub 仓库页面点击右侧 "Releases" → "Create a new release"
-   - 填写版本标签（如 `v1.0.0`）、标题和发布说明
-   - 在 "Attach binaries" 区域上传 `dist/FastType.exe` 文件
+2. **创建 Release：**
+   - 访问：`https://github.com/qq603512173/FastType/releases`
+   - 点击 "Create a new release"
+   - **Tag version**：输入 `v1.0.0`（如果提示需要 tag，直接输入新标签名）
+   - **Release title**：`FastType v1.0.0`
+   - **Description**：填写版本说明
+   - 在 "Attach binaries" 区域上传 `dist/FastType.exe`
    - 点击 "Publish release"
-   - Release 创建后，exe 文件会出现在该 Release 的下载列表中
 
-2. **启用 GitHub Pages：**
-   - 在仓库 Settings → Pages
-   - Source 选择 "Deploy from a branch"
-   - Branch 选择 `main`，文件夹选择 `/ (root)`
-   - 保存后访问：`https://qq603512173.github.io/FastType/`
+### 启用 GitHub Pages
 
-3. **下载链接已配置：**
-   - `index.html` 中的下载链接已配置为你的仓库
-   - 提交并推送到仓库即可
+1. 在仓库 Settings → Pages
+2. Source 选择 "GitHub Actions"（推荐）或 "Deploy from a branch"
+3. 如果选择分支部署：Branch 选择 `main`，Folder 选择 `/ (root)`
+4. 保存后访问：`https://qq603512173.github.io/FastType/`
 
-### 方式二：其他托管方式
-
-- **GitHub Pages**：免费，适合静态页面
-- **Gitee Pages**：国内访问更快
-- **其他选择**：Vercel、Netlify 等
+> **说明：** exe 文件上传到 GitHub Releases，不会出现在代码仓库中。`index.html` 会自动从 Releases 获取最新版本下载链接。
 
 ## 使用说明
 
