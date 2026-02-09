@@ -1,6 +1,8 @@
-把 QuickType 的 logo 放在本目录下，任选其一即可：
+把 FastType 的 logo 放在本目录下：
 
-- icon.ico  （Windows 推荐，任务栏/标题栏/托盘）
-- icon.png  （也可用，建议 256×256 或 64×64）
+- icon.ico  （推荐，直接作为 exe 图标和窗口/托盘图标）
+- icon.png  （也可用，打包时会自动转换为 icon.ico，需要安装 Pillow：`pip install Pillow`）
 
-放好后重新运行 QuickType，窗口和托盘会显示你的图标。
+建议尺寸：256×256 或 64×64
+
+放好后重新运行 FastType，窗口和托盘会显示你的图标。

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-QuickType - 快捷键调出，搜索常用文本后回车粘贴到当前焦点。
+FastType - 快捷键调出，搜索常用文本后回车粘贴到当前焦点。
 Python + PyQt5 方案，可直接向系统发送按键，无沙箱限制。
 """
 import json
@@ -149,7 +149,7 @@ FOCUS_SEARCH_DELAYS_MS = (50, 120, 220)
 
 
 def get_snippets_path() -> str:
-    base = os.path.join(os.path.expanduser("~"), ".quicktype")
+    base = os.path.join(os.path.expanduser("~"), ".fasttype")
     Path(base).mkdir(parents=True, exist_ok=True)
     return os.path.join(base, SNIPPETS_FILE)
 
@@ -353,7 +353,7 @@ class MainWindow(QWidget):
         self._load_snippets()
 
     def _setup_ui(self):
-        self.setWindowTitle("QuickType")
+        self.setWindowTitle("FastType")
         self.setFixedSize(700, 480)
         self.setWindowFlags(
             Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint
@@ -661,7 +661,7 @@ class MainWindow(QWidget):
 def main():
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
-    app.setApplicationName("QuickType")
+    app.setApplicationName("FastType")
     window = MainWindow()
 
     tray = QSystemTrayIcon(parent=window)
@@ -672,7 +672,7 @@ def main():
         else:
             tray.setIcon(app.style().standardIcon(QStyle.SP_ComputerIcon))
         menu = QMenu()
-        show_act = QAction("显示 QuickType", menu)
+        show_act = QAction("显示 FastType", menu)
         show_act.triggered.connect(window.show_and_focus)
         menu.addAction(show_act)
         quit_act = QAction("退出", menu)
