@@ -4,9 +4,9 @@
 
 ## 🌐 下载页面
 
-**访问下载页面：** [https://YOUR_USERNAME.github.io/FastType/](https://YOUR_USERNAME.github.io/FastType/)
+**访问下载页面：** [https://qq603512173.github.io/FastType/](https://qq603512173.github.io/FastType/)
 
-> 提示：请将 `YOUR_USERNAME` 替换为你的 GitHub 用户名，并启用 GitHub Pages。
+> 提示：启用 GitHub Pages 后即可访问下载页面。
 
 ## 技术方案：Python + PyQt5
 
@@ -77,22 +77,25 @@ pyinstaller FastType.spec
 
 ### 方式一：GitHub Releases + GitHub Pages（推荐）
 
+**说明：** exe 文件上传到 GitHub Releases（版本发布），不是直接上传到代码仓库。Releases 是 GitHub 的版本管理功能，文件作为附件存储，不会出现在代码文件列表中。
+
 1. **上传 exe 到 GitHub Releases：**
-   - 本地打包：`pyinstaller FastType.spec`
-   - 在 GitHub 仓库页面点击 "Releases" → "Create a new release"
-   - 填写版本号（如 `v1.0.0`）和发布说明
-   - 上传 `dist/FastType.exe` 文件
+   - 本地打包：`pyinstaller FastType.spec`（生成 `dist/FastType.exe`）
+   - 在 GitHub 仓库页面点击右侧 "Releases" → "Create a new release"
+   - 填写版本标签（如 `v1.0.0`）、标题和发布说明
+   - 在 "Attach binaries" 区域上传 `dist/FastType.exe` 文件
    - 点击 "Publish release"
+   - Release 创建后，exe 文件会出现在该 Release 的下载列表中
 
 2. **启用 GitHub Pages：**
    - 在仓库 Settings → Pages
    - Source 选择 "Deploy from a branch"
    - Branch 选择 `main`，文件夹选择 `/ (root)`
-   - 保存后访问：`https://YOUR_USERNAME.github.io/FastType/`
+   - 保存后访问：`https://qq603512173.github.io/FastType/`
 
-3. **更新下载链接：**
-   - 编辑 `index.html`，将 `YOUR_USERNAME` 替换为你的 GitHub 用户名
-   - 提交并推送到仓库
+3. **下载链接已配置：**
+   - `index.html` 中的下载链接已配置为你的仓库
+   - 提交并推送到仓库即可
 
 ### 方式二：其他托管方式
 

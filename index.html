@@ -311,7 +311,7 @@
         // 尝试从 GitHub API 获取最新版本信息
         async function fetchLatestVersion() {
             try {
-                const repo = 'qq603512173/FastType'; // 请替换为你的 GitHub 用户名和仓库名
+                const repo = 'qq603512173/FastType';
                 const response = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
                 if (response.ok) {
                     const data = await response.json();
