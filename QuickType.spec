@@ -6,9 +6,13 @@ import os
 
 block_cipher = None
 
-# 若有 build 目录则打包进去（图标等）
+# 只打包 build 下的图标文件，不打包整个 build/（避免把 build/QuickType 打进包）
 build_dir = os.path.join(SPECPATH, 'build')
-datas = [(build_dir, 'build')] if os.path.isdir(build_dir) else []
+datas = []
+for name in ('icon.ico', 'icon.png'):
+    p = os.path.join(build_dir, name)
+    if os.path.isfile(p):
+        datas.append((p, 'build'))
 # exe 图标：若有 build/icon.ico 则使用
 icon_path = os.path.join(SPECPATH, 'build', 'icon.ico')
 icon = icon_path if os.path.isfile(icon_path) else None
