@@ -387,9 +387,7 @@ class MainWindow(QWidget):
     def _setup_ui(self):
         self.setWindowTitle("FastType")
         self.setFixedSize(700, 480)
-        self.setWindowFlags(
-            Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint
-        )
+        self.setWindowFlags(Qt.WindowCloseButtonHint)
         icon = _app_icon()
         if icon is not None:
             self.setWindowIcon(icon)
